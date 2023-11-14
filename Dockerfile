@@ -2,7 +2,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build-env
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /src
 
 # Copy the project files to the working directory
 COPY  src/MyProject.csproj .
@@ -20,7 +20,7 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/aspnet:3.1
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /src
 
 # Copy the published application from build image
 COPY --from=build-env /app/out .
