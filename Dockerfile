@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build-env
 WORKDIR /app
 
 # Copy the project files to the working directory
-COPY  /path/to/your/project/src/MyProject.csproj .
+COPY  src/*.csproj .
 
 # Restore NuGet packages
 RUN dotnet restore MyProject.csproj 
