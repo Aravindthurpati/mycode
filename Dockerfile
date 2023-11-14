@@ -8,7 +8,7 @@ WORKDIR /app
 COPY  src/MyProject.csproj .
 
 # Restore NuGet packages
-RUN dotnet restore MyProject.csproj 
+RUN dotnet restore /src/MyProject.csproj 
 
 # Copy the remaining files to the working directory
 COPY . .
