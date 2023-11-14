@@ -1,5 +1,5 @@
 # Use the official .NET Core SDK as a base image
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build-env
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -8,16 +8,16 @@ WORKDIR /app
 COPY *.csproj ./
 
 # Restore NuGet packages
-RUN dotnet restore
+RUN dotnet restore MyProject.csproj
 
 # Copy the remaining files to the working directory
-COPY . ./
+COPY . .
 
 # Build the application
 RUN dotnet publish -c Release -o out
 
 # Use the official .NET Core runtime as the final image
-FROM mcr.microsoft.com/dotnet/aspnet:5.0
+FROM mcr.microsoft.com/dotnet/aspnet:3.1
 
 # Set the working directory inside the container
 WORKDIR /app
