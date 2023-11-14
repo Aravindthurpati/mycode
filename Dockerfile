@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet:3.1 AS build-env
 WORKDIR /app
 
-FROM mcr.microsoft.com/dotnet:5.0-sdk AS build-env
+FROM mcr.microsoft.com/dotnet:3.1-sdk AS build-env
 WORKDIR /src
 
 # Copy only the .csproj file and restore as distinct layers
