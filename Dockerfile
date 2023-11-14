@@ -1,32 +1,26 @@
-# Use the official .NET Core SDK as a base image
-FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build-env
+# Use the official .NET SDK image as the build environment
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
+WORKDIR /app
 
-# Set the working directory inside the container
-WORKDIR /src
+# Copy the project file and restore dependencies
+COPY *.csproj ./
+RUN dotnet restore
 
-# Copy the project files to the working directory
-COPY  src/MyProject.csproj .
-
-# Restore NuGet packages
-RUN dotnet restore /src/MyProject.csproj 
-
-# Copy the remaining files to the working directory
+# Copy the remaining source code
 COPY . .
 
 # Build the application
 RUN dotnet publish -c Release -o out
 
-# Use the official .NET Core runtime as the final image
-FROM mcr.microsoft.com/dotnet/aspnet:3.1
+# Use the official ASP.NET Core runtime image for the final image
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+WORKDIR /app
 
-# Set the working directory inside the container
-WORKDIR /src
-
-# Copy the published application from build image
+# Copy the published application from the build environment
 COPY --from=build-env /app/out .
 
-# Expose the port that the application will run on
+# Expose the port your application will run on
 EXPOSE 80
 
-# Define the command to run the application
+# Define the command to run your application
 ENTRYPOINT ["dotnet", "YourAppName.dll"]
